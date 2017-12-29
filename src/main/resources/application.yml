@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: springtest
+  mvc:
+    servlet:
+      load-on-startup: 1
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+  cloud:
+    stream:
+      bindings:
+        springCloudBusInput:
+          group: springtest
+server:
+  port: ${PORT:7001}
