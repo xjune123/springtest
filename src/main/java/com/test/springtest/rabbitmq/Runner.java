@@ -11,7 +11,6 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class Runner implements CommandLineRunner {
@@ -30,30 +29,36 @@ public class Runner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Sending message...");
         System.out.println("SendTime :" + new Date());
+        String messageText = "";
 
+        //第一条消息
         MessageProperties properties = new MessageProperties();
-        properties.setDelay(150000);
-        properties.setExpiration(String.valueOf(10000));
+        properties.setDelay(6500);
         properties.setContentType(MediaType.APPLICATION_JSON_VALUE);
         properties.setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        /*template.send(exchange, routingKey,
-                MessageBuilder.withBody("foo".getBytes()).andProperties(properties).build());*/
+        messageText = "我是第一条消息:" + properties.getDelay();
+
+        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.queueName, MessageBuilder.withBody(messageText.getBytes()).andProperties(properties).build());
+
+        //第二条消息
+        MessageProperties properties2 = new MessageProperties();
+        properties2.setDelay(3500);
+        properties2.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        properties2.setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        messageText = "我是第二条消息:" + properties2.getDelay();
+
+        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.queueName, MessageBuilder.withBody(messageText.getBytes()).andProperties(properties2).build());
 
 
-       /* Message message = new Message("Hello delay message".getBytes(), MessagePropertiesBuilder
-                .newInstance()
-                //.setContentType(MediaType.APPLICATION_JSON_VALUE)
-                .setDeliveryModeIfAbsentOrDefault(MessageDeliveryMode.PERSISTENT)
-                .setPriority(0)
-               // .setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                //.setExpiration(String.valueOf(1000))
-                .build());*/
+        //第三条消息
+        MessageProperties properties3 = new MessageProperties();
+        properties3.setDelay(10500);
+        properties3.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        properties3.setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        messageText = "我是第三条消息:" + properties3.getDelay();
 
-        //rabbitTemplate.convertAndSend(SpringtestApplication.queueName, message);
+        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.queueName, MessageBuilder.withBody(messageText.getBytes()).andProperties(properties3).build());
 
-        //rabbitTemplate.convertAndSend(SpringtestApplication.queueName, "Hello from RabbitMQ!");
-        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.queueName, MessageBuilder.withBody("Hello".getBytes()).andProperties(properties).build());
-        receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
-        context.close();
+
     }
 }

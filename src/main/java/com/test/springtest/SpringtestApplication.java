@@ -11,10 +11,11 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class SpringtestApplication {
     public final static String queueName = "my-delay-queue";
-    public final static String DELAY_EXCHANGE ="my-delay-exchange";
+    public final static String DELAY_EXCHANGE = "my-delay-exchange";
+
     @Bean
     Queue queue() {
-        return new Queue(queueName, false);
+        return new Queue(queueName, true);
     }
 
     @Bean
@@ -22,7 +23,8 @@ public class SpringtestApplication {
         return BindingBuilder.bind(queue).to(exchange).with(queueName);
     }
 
-    /*@Bean
+    /*
+    @Bean
     SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
                                              MessageListenerAdapter listenerAdapter) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
@@ -34,9 +36,9 @@ public class SpringtestApplication {
 
     @Bean
     MessageListenerAdapter listenerAdapter(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, "onMessage1");
-    }*/
-
+        return new MessageListenerAdapter(receiver, "onMessage");
+    }
+*/
     @Bean
     TopicExchange exchange() {
 		/*Map<String, Object> args = new HashMap<String, Object>();
