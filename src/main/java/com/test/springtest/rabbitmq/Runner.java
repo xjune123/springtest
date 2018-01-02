@@ -38,7 +38,7 @@ public class Runner implements CommandLineRunner {
         properties.setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         messageText = "我是第一条消息:" + properties.getDelay();
 
-        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.queueName, MessageBuilder.withBody(messageText.getBytes()).andProperties(properties).build());
+        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.QUEUE_NAME, MessageBuilder.withBody(messageText.getBytes()).andProperties(properties).build());
 
         //第二条消息
         MessageProperties properties2 = new MessageProperties();
@@ -47,7 +47,7 @@ public class Runner implements CommandLineRunner {
         properties2.setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         messageText = "我是第二条消息:" + properties2.getDelay();
 
-        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.queueName, MessageBuilder.withBody(messageText.getBytes()).andProperties(properties2).build());
+        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.QUEUE_NAME, MessageBuilder.withBody(messageText.getBytes()).andProperties(properties2).build());
 
 
         //第三条消息
@@ -57,7 +57,7 @@ public class Runner implements CommandLineRunner {
         properties3.setHeader(MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         messageText = "我是第三条消息:" + properties3.getDelay();
 
-        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.queueName, MessageBuilder.withBody(messageText.getBytes()).andProperties(properties3).build());
+        rabbitTemplate.send(SpringtestApplication.DELAY_EXCHANGE, SpringtestApplication.QUEUE_NAME, MessageBuilder.withBody(messageText.getBytes()).andProperties(properties3).build());
 
 
     }

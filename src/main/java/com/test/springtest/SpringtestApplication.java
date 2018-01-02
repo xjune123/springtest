@@ -8,19 +8,25 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootApplication
 public class SpringtestApplication {
-    public final static String queueName = "my-delay-queue";
+    public final static String QUEUE_NAME = "my-delay-queue";
     public final static String DELAY_EXCHANGE = "my-delay-exchange";
+
+    public final static String PRIORITY_QUEUE_NAME = "my-priority-queue";
+    public final static String PRIORITY_EXCHANGE = "my-priority-exchange";
 
     @Bean
     Queue queue() {
-        return new Queue(queueName, true);
+        return new Queue(QUEUE_NAME, true);
     }
 
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(queueName);
+        return BindingBuilder.bind(queue).to(exchange).with(QUEUE_NAME);
     }
 
     /*
@@ -29,7 +35,7 @@ public class SpringtestApplication {
                                              MessageListenerAdapter listenerAdapter) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
+        container.setQueueNames(QUEUE_NAME);
         container.setMessageListener(listenerAdapter);
         return container;
     }
@@ -45,6 +51,32 @@ public class SpringtestApplication {
 		args.put("x-delayed-type", "direct");*/
         TopicExchange topicExchange = new TopicExchange("my-delay-exchange");
         topicExchange.setDelayed(true);
+        return topicExchange;
+    }
+
+
+    @Bean
+    Queue queuePriority() {
+        //Dictionary<String, Object> dic = new Dictionary<String, Object>();
+        //dic.put("x-max-priority", 20);
+
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("x-max-priority", 20);
+        Queue queue = new Queue(PRIORITY_QUEUE_NAME, true, false, false, args);
+
+        return queue;
+    }
+
+    @Bean
+    Binding bindingPriority(Queue queuePriority, TopicExchange exchangePriority) {
+        return BindingBuilder.bind(queuePriority).to(exchangePriority).with(PRIORITY_QUEUE_NAME);
+    }
+
+    @Bean
+    TopicExchange exchangePriority() {
+		/*Map<String, Object> args = new HashMap<String, Object>();
+		args.put("x-delayed-type", "direct");*/
+        TopicExchange topicExchange = new TopicExchange(PRIORITY_EXCHANGE);
         return topicExchange;
     }
 
