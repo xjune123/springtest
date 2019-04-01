@@ -80,6 +80,9 @@ public class SpringtestApplication {
         return topicExchange;
     }
 
+
+
+
     public static void main(String[] args) {
         SpringApplication.run(SpringtestApplication.class, args);
     }
