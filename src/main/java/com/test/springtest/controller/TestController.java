@@ -2,6 +2,7 @@ package com.test.springtest.controller;
 
 import com.test.springtest.dlxmessage.SendDelayMessage;
 import com.test.springtest.rabbitmq.Runner;
+import com.test.springtest.redismq.SendRedisDelayQueue;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -24,6 +25,9 @@ public class TestController {
     SendDelayMessage sendDelayMessage;
     @Resource
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    SendRedisDelayQueue sendRedisDelayQueue;
 
     @RequestMapping("/test")
     @ResponseStatus(HttpStatus.OK)
@@ -93,5 +97,13 @@ public class TestController {
         System.out.println(new Date());
         return ResponseEntity.ok().build();
 
+    }
+
+    @RequestMapping("/testRedisDelay")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity testRedisDelay(String orderId, @RequestParam(defaultValue = "10") Long delayTime) throws IOException {
+        sendRedisDelayQueue.Send(orderId, delayTime);
+        System.out.println(new Date());
+        return ResponseEntity.ok().build();
     }
 }

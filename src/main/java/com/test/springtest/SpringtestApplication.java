@@ -7,11 +7,13 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import tk.mybatis.spring.annotation.MapperScan;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
+@MapperScan(value = "com.test.springtest.transaction.mapper")
 public class SpringtestApplication {
     public final static String QUEUE_NAME = "my-delay-queue";
     public final static String DELAY_EXCHANGE = "my-delay-exchange";
