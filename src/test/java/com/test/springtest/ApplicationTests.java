@@ -1,6 +1,6 @@
 package com.test.springtest;
 
-import com.test.springtest.transaction.TransactionalService;
+import com.test.springtest.transaction.service.TransactionService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = {SpringtestApplication.class})
 public class ApplicationTests {
     @Autowired
-    private TransactionalService transactionalService;
+    private TransactionService transactionalService;
 
     @Test
     public void testTransaction() {

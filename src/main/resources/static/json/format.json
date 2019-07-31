@@ -1,0 +1,22 @@
+{
+  "type" : "object",
+  "properties" : {
+    "salary" : {
+      "type" : "number"
+    },
+    "userId" : {
+      "type" : "integer"
+    },
+    "bonus" : {
+      "type" : "number"
+    },
+    "name" : {
+      "type" : "string"
+    }
+  },
+  "required": [
+    "userId",
+    "name",
+    "bonus"
+  ]
+}

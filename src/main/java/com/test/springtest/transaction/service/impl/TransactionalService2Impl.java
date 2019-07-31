@@ -1,4 +1,4 @@
-package com.test.springtest.transaction;
+package com.test.springtest.transaction.service.impl;
 
 import com.test.springtest.transaction.domain.Test;
 import com.test.springtest.transaction.domain.Test2;
@@ -20,7 +20,7 @@ import java.util.Date;
  * @date 2019/4/26 下午3:50
  */
 @Service
-public class TransactionalService2 {
+public class TransactionalService2Impl {
 
     @Autowired
     private TestMapper testMapper;

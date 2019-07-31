@@ -14,6 +14,10 @@ spring:
           group: springtest
           consumer:
             recoveryInterval: 10000
+  redis:
+    sentinel:
+      master: bkjkredis
+      nodes: 172.29.10.50:16378,172.29.10.70:16378,172.29.10.90:16378
     database: 12
     pool:
       max-active: 5000

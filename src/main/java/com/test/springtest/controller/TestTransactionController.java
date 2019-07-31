@@ -1,6 +1,6 @@
 package com.test.springtest.controller;
 
-import com.test.springtest.transaction.TransactionalService;
+import com.test.springtest.transaction.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestTransactionController {
     @Autowired
-    TransactionalService transactionalService;
+    TransactionService transactionalService;
 
     @RequestMapping("/testTranasction")
     @ResponseStatus(HttpStatus.OK)
@@ -46,5 +46,11 @@ public class TestTransactionController {
     @ResponseStatus(HttpStatus.OK)
     public void insertRequiresNew() {
         transactionalService.insertRequiresNew();
+    }
+
+    @RequestMapping("/notFirstInsert")
+    @ResponseStatus(HttpStatus.OK)
+    public void notFirstInsert() {
+        transactionalService.notFirstInsert();
     }
 }
